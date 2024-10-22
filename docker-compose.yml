@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  bounder:
+    image: ${DOCKER_REGISTRY-}bounder
+    build:
+      context: .
+      dockerfile: Bounder/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    depends_on:
+      - bounder.database
+
+  bounder.database:
+    image: postgres:latest
+    container_name: bounder.database
+    environment:
+      - POSTGRES_DB=bound
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/bounder-db:/var/lib/postbres/data
+    ports:
+      - 5432:5432
