@@ -8,6 +8,7 @@ namespace Bounder.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Company> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

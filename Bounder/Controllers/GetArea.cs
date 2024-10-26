@@ -22,7 +22,7 @@ namespace Bounder.Controllers
         public async Task<IActionResult> getAll()
         {
             var service = new LocationInAreaService();
-            bool isInArea = service.IsPointWithinArea(new Location() { Id=0, Title="Pik dahme", Latitude= 50.109017725549855,Longitude=8.667408603127804 });
+            bool isInArea = service.IsPointWithinArea(new Location() { Id=0, Title="Pik dahme", Latitude=50.10900970200649, Longitude=8.66738858553383 });
             return Ok(isInArea);
         }
     }
