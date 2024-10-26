@@ -1,6 +1,8 @@
 ﻿using Bounder.Data;
 using Microsoft.AspNetCore.Mvc;
 using Bounder.Models;
+using Bounder.Repositories.IRepositories;
+using Bounder.Services;
 
 namespace Bounder.Controllers
 {
@@ -8,18 +10,20 @@ namespace Bounder.Controllers
     [Route("api/geo")]
     public class GetArea : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ILocationRepository _locationRepository;
 
-        public GetArea(ApplicationDbContext context)
+        public GetArea(ILocationRepository repository)
         {
-            _context = context;
+            _locationRepository = repository;
         }
 
         [HttpGet]
         [Route("get")]
-        public IActionResult get()
+        public async Task<IActionResult> getAll()
         {
-            return Ok(_context.Locations.ToList());
+            var service = new LocationInAreaService();
+            bool isInArea = service.IsPointWithinArea(new Location() { Id=0, Title="Pik dahme", Latitude= 50.109017725549855,Longitude=8.667408603127804 });
+            return Ok(isInArea);
         }
     }
 }

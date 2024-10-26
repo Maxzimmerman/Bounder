@@ -1,4 +1,7 @@
 using Bounder.Data;
+using Bounder.Models;
+using Bounder.Repositories;
+using Bounder.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+
+builder.Services.AddScoped<IRepository<Location>, LocationRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 var app = builder.Build();
 
