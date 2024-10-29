@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Bounder.Models
 {
@@ -13,6 +14,7 @@ namespace Bounder.Models
         [Required]
         public double Longitude { get; set; }
         public int? CompanyId { get; set; }
-        public Company? Company { get; set; } = new Company();
+        [JsonIgnore]
+        public Company? Company { get; set; }
     }
 }

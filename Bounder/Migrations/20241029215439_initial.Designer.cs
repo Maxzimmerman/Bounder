@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bounder.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241026210228_initial")]
+    [Migration("20241029215439_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -67,7 +67,7 @@ namespace Bounder.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("CompanyLocation");
+                    b.ToTable("CompanyLocations");
                 });
 
             modelBuilder.Entity("Bounder.Models.Location", b =>

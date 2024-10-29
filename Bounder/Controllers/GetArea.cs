@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Bounder.Models;
 using Bounder.Repositories.IRepositories;
 using Bounder.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bounder.Controllers
 {
@@ -11,10 +12,24 @@ namespace Bounder.Controllers
     public class GetArea : ControllerBase
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly ICompanyRepository _companyRepository;
+        private readonly ICompanyLocationRepository _companyLocationRepository;
 
-        public GetArea(ILocationRepository repository)
+        public GetArea(ILocationRepository repository, 
+            ICompanyRepository companyRepository, 
+            ICompanyLocationRepository companyLocationRepository)
         {
             _locationRepository = repository;
+            _companyRepository = companyRepository;
+            _companyLocationRepository = companyLocationRepository;
+        }
+
+        [HttpGet]
+        [Route("just get company from db")]
+        public async Task<IActionResult> get()
+        {
+            var companies = await _companyRepository.GetAll();
+            return Ok(companies);
         }
 
         [HttpGet]

@@ -16,12 +16,12 @@ namespace Bounder.Repositories
             this.dbSet = _context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             return await dbSet.ToListAsync();
         }
 
-        public async Task<T> GetOne(int id)
+        public virtual async Task<T> GetOne(int id)
         {
             return await dbSet.FindAsync(id);
         }

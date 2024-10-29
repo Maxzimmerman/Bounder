@@ -64,7 +64,7 @@ namespace Bounder.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("CompanyLocation");
+                    b.ToTable("CompanyLocations");
                 });
 
             modelBuilder.Entity("Bounder.Models.Location", b =>

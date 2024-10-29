@@ -9,6 +9,7 @@ namespace Bounder.Data
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Company> Clients { get; set; }
+        public DbSet<CompanyLocation> CompanyLocations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

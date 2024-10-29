@@ -18,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Services.AddScoped<IRepository<Location>, LocationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<ICompanyLocationRepository, CompanyLocationRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
 var app = builder.Build();
 
