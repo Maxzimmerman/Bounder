@@ -36,9 +36,12 @@ namespace Bounder.Controllers
         [Route("get")]
         public async Task<IActionResult> getAll()
         {
+            var companies = await _companyRepository.GetAll();
             var service = new LocationInAreaService();
-            bool isInArea = service.IsPointWithinArea(new Location() { Id=0, Title="Pik dahme", Latitude=50.10900970200649, Longitude=8.66738858553383 });
-            return Ok(isInArea);
+            var locationNotWithin = new Location() { Id = 0, Title = "Pik dahme", Latitude = 50.10900970200649, Longitude = 8.66738858553383 };
+            var locationWithin = new Location() { Id = 0, Title = "Pik dahme", Latitude = 50.10894779572615, Longitude=8.667290458508749 };
+            var company = service.getCompanyTheLocationIsWithin(locationNotWithin, companies.ToList());
+            return Ok(company);
         }
     }
 }

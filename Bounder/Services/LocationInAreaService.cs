@@ -1,4 +1,5 @@
-﻿using Bounder.Models;
+﻿using Bounder.Dtos;
+using Bounder.Models;
 using NetTopologySuite.Geometries;
 
 namespace Bounder.Services
@@ -20,6 +21,22 @@ namespace Bounder.Services
             var area = geometryFactory.CreatePolygon(coordinatesOfArea.ToArray());
             var point = geometryFactory.CreatePoint(new Coordinate(location.Latitude, location.Longitude));
             return area.Contains(point);
+        }
+
+        public Company getCompanyTheLocationIsWithin(Models.Location location, List<Company> companies)
+        {
+            var geometryFacotory = new GeometryFactory();
+            var point = geometryFacotory.CreatePoint(new Coordinate(location.Latitude, location.Longitude));
+
+            foreach (Company company in companies)
+            {
+                var area = geometryFacotory.CreatePolygon(company.Area.ToCoordinate().ToArray());
+                if(area.Contains(point))
+                {
+                    return company;
+                }
+            }
+            return new Company();
         }
     }
 }
