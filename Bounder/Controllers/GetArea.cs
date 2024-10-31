@@ -4,6 +4,7 @@ using Bounder.Models;
 using Bounder.Repositories.IRepositories;
 using Bounder.Services;
 using Microsoft.EntityFrameworkCore;
+using Bounder.Models.NoDbModels;
 
 namespace Bounder.Controllers
 {
@@ -24,24 +25,15 @@ namespace Bounder.Controllers
             _companyLocationRepository = companyLocationRepository;
         }
 
-        [HttpGet]
-        [Route("just get company from db")]
-        public async Task<IActionResult> get()
-        {
-            var companies = await _companyRepository.GetAll();
-            return Ok(companies);
-        }
-
-        [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> getAll()
+        [HttpPost]
+        [Route("get message")]
+        public async Task<IActionResult> getAll([FromBody] Location location)
         {
             var companies = await _companyRepository.GetAll();
             var service = new LocationInAreaService();
-            var locationNotWithin = new Location() { Id = 0, Title = "Pik dahme", Latitude = 50.10900970200649, Longitude = 8.66738858553383 };
-            var locationWithin = new Location() { Id = 0, Title = "Pik dahme", Latitude = 50.10894779572615, Longitude=8.667290458508749 };
-            var company = service.getCompanyTheLocationIsWithin(locationNotWithin, companies.ToList());
-            return Ok(company);
+            var company = service.getCompanyTheLocationIsWithin(location, companies.ToList());
+            var message = new Message(company, "max");
+            return Ok(message);
         }
     }
 }
