@@ -10,6 +10,6 @@ namespace Bounder.Models
         [Required]
         public string CompanyName { get; set; } = string.Empty;
         [Required]
-        public List<CompanyLocation> Area { get; set; } = new List<CompanyLocation>();
+        public List<CompanyLocation> Area { get; set; }
     }
 }

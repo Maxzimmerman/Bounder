@@ -4,9 +4,9 @@ using NetTopologySuite.Geometries;
 
 namespace Bounder.Services
 {
-    public class LocationInAreaService
+    public static class LocationInAreaService
     {
-        public bool IsPointWithinArea(Models.Location location)
+        public static bool IsPointWithinArea(Models.Location location)
         {
             var coordinatesOfArea = new List<Coordinate>()
             {
@@ -23,18 +23,24 @@ namespace Bounder.Services
             return area.Contains(point);
         }
 
-        public Company getCompanyTheLocationIsWithin(Models.Location location, List<Company> companies)
+        public static Company getCompanyTheLocationIsWithin(Models.Location location, List<Company> companies)
         {
             var geometryFacotory = new GeometryFactory();
             var point = geometryFacotory.CreatePoint(new Coordinate(location.Latitude, location.Longitude));
 
-            foreach (Company company in companies)
+            foreach(Company company in companies)
             {
-                var area = geometryFacotory.CreatePolygon(company.Area.ToCoordinate().ToArray());
-                if(area.Contains(point))
+                var coordinates = company.Area.ToCoordinate().ToArray();
+                if (coordinates.Count() != 0)
                 {
-                    return company;
+                    var area = geometryFacotory.CreatePolygon(coordinates);
+                    if (area.Contains(point))
+                    {
+                        return company;
+                    }
                 }
+                else
+                    continue;
             }
             return new Company();
         }

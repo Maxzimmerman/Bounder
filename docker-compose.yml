@@ -20,6 +20,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/bounder-db:/var/lib/postbres/data
+      - ./.containers/bounder-db:/var/lib/postgresql/data
     ports:
       - 5432:5432

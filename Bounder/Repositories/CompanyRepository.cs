@@ -23,8 +23,10 @@ namespace Bounder.Repositories
         public async override Task<IEnumerable<Company>> GetAll()
         {
             var companies = await _context.Clients.Include(c => c.Area).ToListAsync();
-            Console.WriteLine(companies);
-            return companies;
+            if (companies != null)
+                return companies;
+            else
+                return null;
         }
     }
 }

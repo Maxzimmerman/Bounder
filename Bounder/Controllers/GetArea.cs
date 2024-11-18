@@ -5,6 +5,7 @@ using Bounder.Repositories.IRepositories;
 using Bounder.Services;
 using Microsoft.EntityFrameworkCore;
 using Bounder.Models.NoDbModels;
+using Bounder.CustomFilters;
 
 namespace Bounder.Controllers
 {
@@ -25,15 +26,44 @@ namespace Bounder.Controllers
             _companyLocationRepository = companyLocationRepository;
         }
 
-        [HttpPost]
-        [Route("get message")]
-        public async Task<IActionResult> getAll([FromBody] Location location)
+        [HttpGet]
+        [Route("get-companies")]
+        [ApiKeyFilters]
+        public async Task<IActionResult> getCompanies([FromQuery] string apiKey)
         {
             var companies = await _companyRepository.GetAll();
-            var service = new LocationInAreaService();
-            var company = service.getCompanyTheLocationIsWithin(location, companies.ToList());
-            var message = new Message(company, "max");
-            return Ok(message);
+            if (companies == null)
+                return BadRequest("Something went wrong");
+            else if (companies.Count() == 0)
+                return NotFound("Couldn't find any companies");
+            return Ok(companies);
+        }
+
+        [HttpPost]
+        [ApiKeyFilterSwagger]
+        [Route("create area")]
+        public IActionResult createCompany([FromBody] Company company, [FromHeader] string apiKey)
+        {
+            if(company != null)
+            {
+                _companyRepository.Create(company);
+                return Ok("Success");
+            }
+            else
+            {
+                return BadRequest("Coudn't create Company");
+            }
+        }
+
+        [HttpPost]
+        [Route("get company")]
+        public async Task<IActionResult> GetCompaniesLocationIsIn([FromBody] Location location)
+        {
+            var companies = await _companyRepository.GetAll();
+            var company = LocationInAreaService.getCompanyTheLocationIsWithin(location, companies.ToList());
+            if (company == null)
+                return BadRequest("Something went wrong");
+            return Ok(company);
         }
     }
 }

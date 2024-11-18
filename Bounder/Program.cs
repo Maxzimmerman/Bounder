@@ -3,6 +3,9 @@ using Bounder.Models;
 using Bounder.Repositories;
 using Bounder.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
